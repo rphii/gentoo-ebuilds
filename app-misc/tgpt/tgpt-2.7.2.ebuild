@@ -6,7 +6,7 @@ EAPI=8
 DESCRIPTION="AI Chatbots in terminal without needing API keys"
 HOMEPAGE="https://github.com/aandrew-me/tgpt"
 SRC_URI="https://github.com/aandrew-me/tgpt/archive/refs/tags/v${PV}.zip
-https://github.com/rphii/gentoo-tpgt-deps/releases/download/v${PV}/tgpt-${PV}-deps.tar.gz
+	https://github.com/rphii/gentoo-tpgt-deps/releases/download/v${PV}/tgpt-${PV}-deps.tar.gz
 "
 
 LICENSE="GPL-3.0"
@@ -19,14 +19,15 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
-#S="${WORKDIR}/${PN}-v${PV}"
-
 src_compile() {
+	if [[ "$ARCH" == "amd64" ]]; then export GOARCH=amd64
+	elif [[ "$ARCH" == "x86" ]]; then export GOARCH=x86
+	elif [[ "$ARCH" == "arm64" ]]; then export GOARCH=arm64
+	else die "architecture $ARCH is not supported"; fi
 	ego build -trimpath -ldflags="-s -w" -o tgpt || die "build failed"
 }
 
 src_install() {
-	#mv "${D}/tgpt-2.7.2" "${D}/tgpt"
 	dobin tgpt
 	echo "installed tgpt"
 }
