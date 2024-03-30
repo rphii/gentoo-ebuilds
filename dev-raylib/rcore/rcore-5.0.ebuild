@@ -61,9 +61,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
-S="${WORKDIR}/raylib-${PV}"
-LIBDIR="${S}/src/"
-EXDIR="${S}/examples/"
+S="${WORKDIR}/raylib-${PV}/src"
 
 src_compile() {
 	# library
@@ -83,7 +81,7 @@ src_compile() {
 	if use wayland ; then
 		CFLAGS+=" -DUSE_WAYLAND_DISPLAY=TRUE"
 	fi
-	emake -C ${LIBDIR} ${platform} ${libtype}
+	emake ${platform} ${libtype}
 }
 
 #   raylib makefile
@@ -135,9 +133,10 @@ src_compile() {
 # *       [raudio] jar_mod (Joshua Reisenauer) for MOD audio module loading
 
 src_install() {
-	doheader ${LIBDIR}{raylib,raymath,rlgl}.h
-	use shared-libs && dolib.so ${LIBDIR}libraylib.so*
-	use static-libs && dolib.a ${LIBDIR}libraylib.a*
-	use examples && dodoc -r ${EXDIR}
+	doheader {raylib,raymath,rlgl}.h
+	use shared-libs && dolib.so libraylib.so*
+	use static-libs && dolib.a libraylib.a*
+	use examples && dodoc -r ../examples
+	dodoc ../{BINDINGS,CONVENTIONS,FAQ,HISTORY,README,ROADMAP}.md
 }
 
