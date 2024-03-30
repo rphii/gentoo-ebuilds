@@ -20,8 +20,10 @@ RDEPEND="${DEPEND}"
 BDEPEND=""
 
 src_compile() {
-	if [[ "$ARCH" =~ ^(amd64|x86|arm64)$ ]]; then export GOARCH="$ARCH"
-	lse die "architecture $ARCH is not supported"; fi
+	case "$ARCH" in
+		amd64|x86|arm64) export GOARCH="$ARCH" ;;
+		*) die "architecture $ARCH is not supported" ;;
+	esac
 	ego build -trimpath -ldflags="-s -w" -o tgpt || die "build failed"
 }
 
