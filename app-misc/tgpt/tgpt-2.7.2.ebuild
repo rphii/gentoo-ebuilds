@@ -20,10 +20,8 @@ RDEPEND="${DEPEND}"
 BDEPEND=""
 
 src_compile() {
-	if [[ "$ARCH" == "amd64" ]]; then export GOARCH=amd64
-	elif [[ "$ARCH" == "x86" ]]; then export GOARCH=x86
-	elif [[ "$ARCH" == "arm64" ]]; then export GOARCH=arm64
-	else die "architecture $ARCH is not supported"; fi
+	if [[ "$ARCH" =~ ^(amd64|x86|arm64)$ ]]; then export GOARCH="$ARCH"
+	lse die "architecture $ARCH is not supported"; fi
 	ego build -trimpath -ldflags="-s -w" -o tgpt || die "build failed"
 }
 
