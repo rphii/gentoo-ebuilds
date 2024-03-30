@@ -42,5 +42,6 @@ src_install() {
 	use static-libs && dolib.a raygui.a
 	doheader raygui.h
 	use examples && dodoc -r ../examples
+	dodoc ../{HISTORY,README}.md
 }
 

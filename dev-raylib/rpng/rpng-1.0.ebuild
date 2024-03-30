@@ -21,5 +21,7 @@ S="${WORKDIR}/rpng-${PV}/src"
 
 src_install() {
 	doheader rpng.h
+	use examples && dodoc -r ../examples
+	dodoc -r ../README.md
 }
 
