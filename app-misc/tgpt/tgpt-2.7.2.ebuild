@@ -11,7 +11,7 @@ SRC_URI="https://github.com/aandrew-me/tgpt/archive/refs/tags/v${PV}.zip
 
 LICENSE="GPL-3.0"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm64 ~x86"
 
 inherit go-module
 
