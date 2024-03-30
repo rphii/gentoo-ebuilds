@@ -17,7 +17,7 @@ DEPEND="dev-raylib/rcore"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
-IUSE="examples +static-libs shared-libs"
+IUSE="examples static-libs shared-libs"
 
 S="${WORKDIR}/raygui-${PV}/src"
 
@@ -32,14 +32,14 @@ src_compile() {
 	LDFLAGS="-fpic -DRAYGUI_IMPLEMENTATION -lraylib -lGL -lm -lpthread -ldl -lrt -lX11"
 	use shared-libs && ${CC} -o raygui.so ${CFLAGS} raygui.c ${LDFLAGS} -shared
 	if use static-libs; then
-		${CC} -c raygui.o ${CFLAGS} raygui.c ${LDFLAGS} -static
-		${AR} rcs raygui.a raygui.o
+		${CC} -c libraygui.o ${CFLAGS} raygui.c ${LDFLAGS} -static
+		${AR} rcs libraygui.a raygui.o
 	fi
 }
 
 src_install() {
-	use shared-libs && dolib.so raygui.so
-	use static-libs && dolib.a raygui.a
+	use shared-libs && dolib.so libraygui.so
+	use static-libs && dolib.a libraygui.a
 	doheader raygui.h
 	use examples && dodoc -r ../examples
 	dodoc ../{HISTORY,README}.md
