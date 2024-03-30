@@ -1,0 +1,10 @@
+DEFINED_PHASES=-
+DEPEND=core? ( dev-raylib/rcore )
+DESCRIPTION=A simple and easy-to-use library to enjoy videogames programming
+EAPI=8
+HOMEPAGE=www.raylib.com
+IUSE=core
+KEYWORDS=~amd64
+RDEPEND=core? ( dev-raylib/rcore )
+SLOT=0
+_md5_=5a6b55e8f2740eb5afd31ade35379a6f
