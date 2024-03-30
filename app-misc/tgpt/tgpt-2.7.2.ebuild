@@ -6,7 +6,7 @@ EAPI=8
 DESCRIPTION="AI Chatbots in terminal without needing API keys"
 HOMEPAGE="https://github.com/aandrew-me/tgpt"
 SRC_URI="https://github.com/aandrew-me/tgpt/archive/refs/tags/v${PV}.zip
-	https://github.com/rphii/gentoo-tpgt-deps/releases/download/v${PV}/tgpt-${PV}-deps.tar.gz
+	https://github.com/rphii/gentoo-tgpt-deps/releases/download/v${PV}/tgpt-${PV}-deps.tar.gz
 "
 
 LICENSE="GPL-3.0"
