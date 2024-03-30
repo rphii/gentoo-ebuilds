@@ -1,9 +1,0 @@
-DEFINED_PHASES=install
-DESCRIPTION=Make use of time functions! | Interpreter for the esoteric programming language
-EAPI=8
-HOMEPAGE=https://github.com/rphii/TimersInterpreter
-KEYWORDS=~amd64
-LICENSE=MIT
-SLOT=0
-SRC_URI=https://github.com/rphii/TimersInterpreter/archive/refs/tags/v1.0_p1.tar.gz
-_md5_=e0895b2ee8226e28c395f834d9b93509
