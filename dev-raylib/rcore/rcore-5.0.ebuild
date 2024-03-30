@@ -37,10 +37,10 @@ KEYWORDS="~amd64"
 # 	wayland-protocols-devel
 
 
-IUSE="wayland +static_libs shared_libs web_libs"
+IUSE="wayland +static-libs shared-libs web-libs examples"
 
 REQUIRED_USE="
-	^^ ( static_libs shared_libs web_libs )
+	^^ ( static-libs shared-libs web-libs )
 "
 
 DEPEND="
@@ -61,19 +61,21 @@ DEPEND="
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
-S="${WORKDIR}/raylib-${PV}/src"
+S="${WORKDIR}/raylib-${PV}"
+LIBDIR="${S}/src/"
+EXDIR="${S}/examples/"
 
 src_compile() {
 	# library
 	platform="PLATFORM="
 	libtype="RAYLIB_LIBTYPE="
-	if use shared_libs ; then
+	if use shared-libs ; then
 		platform+="PLATFORM_DESKTOP"
 		libtype+="SHARED"
-	elif use static_libs ; then
+	elif use static-libs ; then
 		platform+="PLATFORM_DESKTOP"
 		libtype+="STATIC"
-	elif use web_libs ; then
+	elif use web-libs ; then
 		platform+="PLATFORM_WEB"
 	else
 		die "library type not specified"
@@ -81,8 +83,7 @@ src_compile() {
 	if use wayland ; then
 		CFLAGS+=" -DUSE_WAYLAND_DISPLAY=TRUE"
 	fi
-	echo emake ${platform} ${libtype}
-	emake ${platform} ${libtype}
+	emake -C ${LIBDIR} ${platform} ${libtype}
 }
 
 #   raylib makefile
@@ -134,13 +135,9 @@ src_compile() {
 # *       [raudio] jar_mod (Joshua Reisenauer) for MOD audio module loading
 
 src_install() {
-	doheader raylib.h
-	doheader raymath.h
-	doheader rlgl.h
-	if use shared_libs ; then
-		dolib.so libraylib.so*
-	elif use static_libs ; then
-		dolib.a libraylib.a*
-	fi
+	doheader ${LIBDIR}{raylib,raymath,rlgl}.h
+	use shared-libs && dolib.so ${LIBDIR}libraylib.so*
+	use static-libs && dolib.a ${LIBDIR}libraylib.a*
+	use examples && dodoc -r ${EXDIR}
 }
 
