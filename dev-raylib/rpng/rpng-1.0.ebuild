@@ -20,7 +20,8 @@ IUSE="examples"
 S="${WORKDIR}/rpng-${PV}/src"
 
 src_install() {
-	doheader rpng.h
+	insinto /usr/include/raylib
+	doins rpng.h
 	use examples && dodoc -r ../examples
 	dodoc -r ../README.md
 }

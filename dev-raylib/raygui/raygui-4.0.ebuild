@@ -40,7 +40,8 @@ src_compile() {
 src_install() {
 	use shared-libs && dolib.so libraygui.so
 	use static-libs && dolib.a libraygui.a
-	doheader raygui.h
+	insinto /usr/include/raylib
+	doins raygui.h
 	use examples && dodoc -r ../examples
 	dodoc ../{HISTORY,README}.md
 }
