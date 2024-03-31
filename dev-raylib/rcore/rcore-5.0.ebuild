@@ -11,8 +11,6 @@ LICENSE="ZLIB"
 SLOT="0"
 KEYWORDS="~amd64"
 
-#S="${WORKDIR}/${PN}-${P}"
-
 # DEPENDENCIES
 # fedora :
 ##	alsa-lib-devel
@@ -104,39 +102,21 @@ src_compile() {
 #         - Linux DRM subsystem (KMS mode)
 #     > PLATFORM_ANDROID:
 #         - Android (ARM, ARM64)
-
-
-
-# *   DEPENDENCIES (included):
-# *       [rcore] rglfw (Camilla Löwy - github.com/glfw/glfw) for window/context management and input (PLATFORM_DESKTOP)
-# *       [rlgl] glad (David Herberth - github.com/Dav1dde/glad) for OpenGL 3.3 extensions loading (PLATFORM_DESKTOP)
-# *       [raudio] miniaudio (David Reid - github.com/mackron/miniaudio) for audio device/context management
-# *
-# *   OPTIONAL DEPENDENCIES (included):
-# *       [rcore] msf_gif (Miles Fogle) for GIF recording
-# *       [rcore] sinfl (Micha Mettke) for DEFLATE decompression algorithm
-# *       [rcore] sdefl (Micha Mettke) for DEFLATE compression algorithm
-# *       [rtextures] stb_image (Sean Barret) for images loading (BMP, TGA, PNG, JPEG, HDR...)
-# *       [rtextures] stb_image_write (Sean Barret) for image writing (BMP, TGA, PNG, JPG)
-# *       [rtextures] stb_image_resize (Sean Barret) for image resizing algorithms
-# *       [rtext] stb_truetype (Sean Barret) for ttf fonts loading
-# *       [rtext] stb_rect_pack (Sean Barret) for rectangles packing
-# *       [rmodels] par_shapes (Philip Rideout) for parametric 3d shapes generation
-# *       [rmodels] tinyobj_loader_c (Syoyo Fujita) for models loading (OBJ, MTL)
-# *       [rmodels] cgltf (Johannes Kuhlmann) for models loading (glTF)
-# *       [rmodels] Model3D (bzt) for models loading (M3D, https://bztsrc.gitlab.io/model3d)
-# *       [raudio] dr_wav (David Reid) for WAV audio file loading
-# *       [raudio] dr_flac (David Reid) for FLAC audio file loading
-# *       [raudio] dr_mp3 (David Reid) for MP3 audio file loading
-# *       [raudio] stb_vorbis (Sean Barret) for OGG audio loading
-# *       [raudio] jar_xm (Joshua Reisenauer) for XM audio module loading
-# *       [raudio] jar_mod (Joshua Reisenauer) for MOD audio module loading
-
+ 
 src_install() {
-	doheader {raylib,raymath,rlgl}.h
+	# install headers + source files into 'usr/include/raylib'
+	# I know I probably shouldn't install .h AND .c files under /usr/include, but the nature
+	# of raylib almost forces me to (at least) install both 'concepts'. if they're in the
+	# same place, everything gets easier so that we can inspect any file at any time and 
+	# potentially inspire and alter our code from there
+	mkdir ${T}/raylib
+	find -type f \( -name "*.h" -o -name "*.c" \) -exec cp --parents \{\} ${T}/raylib \;
+	doheader -r ${T}/raylib
+	# install library
 	use shared-libs && dolib.so libraylib.so*
 	use static-libs && dolib.a libraylib.a*
 	use examples && dodoc -r ../examples
+	# documentation
 	dodoc ../{BINDINGS,CONVENTIONS,FAQ,HISTORY,README,ROADMAP}.md
 }
 
