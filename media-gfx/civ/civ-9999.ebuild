@@ -21,6 +21,7 @@ DEPEND="
 	dev-build/ninja
 	sys-libs/glibc
 	virtual/opengl
+	media-libs/glfw
 	media-libs/freetype
 "
 RDEPEND="${DEPEND}"
