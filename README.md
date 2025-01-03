@@ -8,5 +8,6 @@
 | [dev-raylib/raygui](https://github.com/raysan5/raygui) | A simple and easy-to-use immediate-mode gui library |
 | [dev-raylib/rcore](https://github.com/raysan5/raylib) | A simple and easy-to-use library to enjoy videogames programming |
 | [dev-raylib/rpng](https://github.com/raysan5/rpng) | A simple and easy-to-use library to manage png chunks |
+| [media-gfx/civ](https://github.com/rphii/c-image-viewer) | A lightweight image viewer written entirely in C |
 | [media-libs/raylib](https://www.raylib.com/) | Manage installation of dev-raylib packages |
 
