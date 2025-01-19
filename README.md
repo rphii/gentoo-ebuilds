@@ -12,3 +12,9 @@
 | [media-gfx/civ](https://github.com/rphii/c-image-viewer) | A lightweight image viewer written entirely in C |
 | [media-libs/raylib](https://www.raylib.com/) | Manage installation of dev-raylib packages |
 
+# Enable
+
+```
+eselect repository add rphii git https://github.com/rphii/gentoo-ebuilds.git
+```
+
