@@ -8,6 +8,7 @@
 | [dev-lang/timers](https://github.com/rphii/TimersInterpreter) | Make use of time functions! Interpreter for the esoteric programming language |
 | [dev-rphii/c-colorprint](https://github.com/rphii/c-colorprint) | Very simple macro to use basic colors |
 | [dev-rphii/c-platform-detect](https://github.com/rphii/c-platform-detect) | Platform detect header  |
+| [dev-rphii/c-attr](https://github.com/rphii/c-attr) | Header for C attributes |
 | [dev-raylib/raygui](https://github.com/raysan5/raygui) | A simple and easy-to-use immediate-mode gui library |
 | [dev-raylib/rcore](https://github.com/raysan5/raylib) | A simple and easy-to-use library to enjoy videogames programming |
 | [dev-raylib/rpng](https://github.com/raysan5/rpng) | A simple and easy-to-use library to manage png chunks |
