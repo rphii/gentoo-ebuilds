@@ -14,7 +14,10 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND=""
+DEPEND="
+	dev-rphii/c-colorprint
+	dev-rphii/c-attr
+"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
