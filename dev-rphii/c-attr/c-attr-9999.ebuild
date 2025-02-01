@@ -22,6 +22,6 @@ BDEPEND=""
 
 src_install() {
 	insinto /usr/include/rphii
-	doins src/colorprint.h
+	doins src/attr.h
 }
 
