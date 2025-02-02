@@ -8,7 +8,7 @@ HOMEPAGE="${URL}"
 SRC_URI="${URL}"
 EGIT_REPO_URI="${URL}"
 
-inherit git-r3
+inherit toolchain-funcs git-r3
 
 LICENSE="MIT"
 SLOT="0"
@@ -22,7 +22,21 @@ DEPEND="
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
+src_compile() {
+	CC="$(tc-getCC)" ./compile.sh
+	if [[ $? -ne 0 ]]; then
+        die "Installation script failed with exit status $?"
+    fi
+}
+
 src_install() {
-	CC="${CC}" ./install.sh
+	insinto /usr/include/rphii
+	doins src/*.h
+
+	insinto /lib/rphii
+	doins build/32/str.so
+
+	insinto /lib64/rphii
+	doins build/64/str.so
 }
 
