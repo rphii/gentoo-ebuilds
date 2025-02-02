@@ -3,9 +3,8 @@
 
 EAPI=8
 DESCRIPTION="Very simple macro to use basic colors"
-URL="https://github.com/rphii/c-attr"
+URL="https://github.com/rphii/c-attr.git"
 HOMEPAGE="${URL}"
-SRC_URI="${URL}"
 EGIT_REPO_URI="${URL}"
 
 inherit git-r3

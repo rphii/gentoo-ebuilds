@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 DESCRIPTION="Zoomer application for Wayland inspired by tsoding's boomer"
-HOMEPAGE="https://github.com/coffeeispower/woomer"
-SRC_URI="https://github.com/coffeeispower/woomer"
-
-EGIT_REPO_URI="https://github.com/coffeeispower/woomer"
+URL="https://github.com/coffeeispower/woomer.git"
+HOMEPAGE="${URL}"
+EGIT_REPO_URI="${URL}"
 
 inherit git-r3 cargo
 

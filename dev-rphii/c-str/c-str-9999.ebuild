@@ -3,9 +3,8 @@
 
 EAPI=8
 DESCRIPTION="C string library"
-URL="https://github.com/rphii/c-str"
+URL="https://github.com/rphii/c-str.git"
 HOMEPAGE="${URL}"
-SRC_URI="${URL}"
 EGIT_REPO_URI="${URL}"
 
 inherit toolchain-funcs git-r3
