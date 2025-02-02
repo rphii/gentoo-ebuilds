@@ -20,6 +20,7 @@ DEPEND="
 	virtual/opengl
 	media-libs/glfw
 	media-libs/freetype
+	dev-libs/stb
 	dev-rphii/c-file
 	dev-rphii/c-str
 	dev-rphii/c-lut
