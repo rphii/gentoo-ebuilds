@@ -13,7 +13,8 @@
 | [dev-rphii/c-colorprint](https://github.com/rphii/c-colorprint) | Very simple macro to use basic colors |
 | [dev-rphii/c-err](https://github.com/rphii/c-err) | Error handling for C |
 | [dev-rphii/c-platform-detect](https://github.com/rphii/c-platform-detect) | Platform detect header |
-| [dev-rphii/c-vec](https://github.com/rphii/c-vec) |  Generic compile-time C vector |
+| [dev-rphii/c-str](https://github.com/rphii/c-str) | C string library |
+| [dev-rphii/c-vec](https://github.com/rphii/c-vec) | Generic compile-time C vector |
 | [gui-apps/woomer](https://github.com/coffeeispower/woomer) | Zoomer application for Wayland inspired by tsoding's boomer |
 | [media-gfx/civ](https://github.com/rphii/c-image-viewer) | A lightweight image viewer written entirely in C |
 | [media-libs/raylib](https://www.raylib.com) | Manage installation of dev-raylib packages |
