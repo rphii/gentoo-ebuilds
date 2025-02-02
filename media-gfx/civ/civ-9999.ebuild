@@ -4,10 +4,10 @@
 EAPI=8
 
 DESCRIPTION="A lightweight image viewer written entirely in C"
-HOMEPAGE="https://github.com/rphii/c-image-viewer"
-SRC_URI="https://github.com/rphii/c-image-viewer"
+HOMEPAGE="https://github.com/rphii/c-image-viewer.git"
+SRC_URI="https://github.com/rphii/c-image-viewer.git"
 
-EGIT_REPO_URI="https://github.com/rphii/c-image-viewer"
+EGIT_REPO_URI="https://github.com/rphii/c-image-viewer.git"
 
 inherit git-r3
 inherit ninja-utils
