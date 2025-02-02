@@ -23,5 +23,11 @@ BDEPEND=""
 src_install() {
 	insinto /usr/include/rphii
 	doins src/*.h
+
+	insinto /lib/rphii
+	doins build/32/libutf8.so
+
+	insinto /lib64/rphii
+	doins build/64/libutf8.so
 }
 
