@@ -20,6 +20,8 @@ DEPEND="
 	virtual/opengl
 	media-libs/glfw
 	media-libs/freetype
+	dev-rphii/file
+	dev-rphii/str
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
@@ -28,7 +30,6 @@ DESTDIR="/opt/${PN}"
 
 src_compile() {
 	eninja -C src
-
 }
 
 src_install() {
