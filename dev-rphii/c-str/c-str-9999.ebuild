@@ -23,6 +23,6 @@ RDEPEND="${DEPEND}"
 BDEPEND=""
 
 src_install() {
-	./install.sh
+	CC="${CC}" ./install.sh
 }
 
