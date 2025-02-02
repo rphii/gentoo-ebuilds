@@ -21,7 +21,10 @@ RDEPEND="${DEPEND}"
 BDEPEND=""
 
 src_compile() {
-	./compile.sh
+	CC="$(tc-getCC)" ./compile.sh
+	if [[ $? -ne 0 ]]; then
+        die "Installation script failed with exit status $?"
+    fi
 }
 
 src_install() {
