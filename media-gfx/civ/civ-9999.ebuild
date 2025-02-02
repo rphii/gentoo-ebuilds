@@ -2,15 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 DESCRIPTION="A lightweight image viewer written entirely in C"
-HOMEPAGE="https://github.com/rphii/c-image-viewer.git"
-SRC_URI="https://github.com/rphii/c-image-viewer.git"
+URL="https://github.com/rphii/c-image-viewer.git"
+HOMEPAGE="${URL}"
+EGIT_REPO_URI="${URL}"
 
-EGIT_REPO_URI="https://github.com/rphii/c-image-viewer.git"
-
-inherit git-r3
-inherit ninja-utils
+inherit git-r3 ninja-utils
 
 LICENSE="MIT"
 SLOT="0"

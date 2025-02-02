@@ -3,9 +3,8 @@
 
 EAPI=8
 DESCRIPTION="Platform detect header"
-URL="https://github.com/rphii/c-platform-detect"
+URL="https://github.com/rphii/c-platform-detect.git"
 HOMEPAGE="${URL}"
-SRC_URI="${URL}"
 EGIT_REPO_URI="${URL}"
 
 inherit git-r3

@@ -3,9 +3,8 @@
 
 EAPI=8
 DESCRIPTION="C file library"
-URL="https://github.com/rphii/c-file"
+URL="https://github.com/rphii/c-file.git"
 HOMEPAGE="${URL}"
-SRC_URI="${URL}"
 EGIT_REPO_URI="${URL}"
 
 inherit toolchain-funcs git-r3

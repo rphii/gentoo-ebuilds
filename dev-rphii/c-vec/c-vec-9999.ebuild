@@ -3,9 +3,8 @@
 
 EAPI=8
 DESCRIPTION="Generic compile-time C vector"
-URL="https://github.com/rphii/c-vec"
+URL="https://github.com/rphii/c-vec.git"
 HOMEPAGE="${URL}"
-SRC_URI="${URL}"
 EGIT_REPO_URI="${URL}"
 
 inherit git-r3
