@@ -7,7 +7,7 @@ URL="https://github.com/rphii/c-utf8.git"
 HOMEPAGE="${URL}"
 EGIT_REPO_URI="${URL}"
 
-inherit git-r3
+inherit toolchain-funcs git-r3
 
 LICENSE="MIT"
 SLOT="0"
