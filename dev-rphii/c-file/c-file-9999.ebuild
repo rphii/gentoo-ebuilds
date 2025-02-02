@@ -17,6 +17,7 @@ DEPEND="
 	dev-rphii/c-colorprint
 	dev-rphii/c-err
 	dev-rphii/c-vec
+	dev-rphii/c-str
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
