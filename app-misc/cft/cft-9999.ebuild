@@ -13,7 +13,11 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND=""
+DEPEND="
+	dev-rphii/str
+	dev-rphii/file
+	dev-rphii/lut
+"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
