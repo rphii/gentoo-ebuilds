@@ -22,6 +22,7 @@ DEPEND="
 	media-libs/freetype
 	dev-rphii/c-file
 	dev-rphii/c-str
+	dev-rphii/c-lut
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
