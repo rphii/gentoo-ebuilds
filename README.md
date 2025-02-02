@@ -14,6 +14,7 @@
 | [dev-rphii/c-err](https://github.com/rphii/c-err) | Error handling for C |
 | [dev-rphii/c-lut](https://github.com/rphii/c-lut) | Generic compile-time C lookup table |
 | [dev-rphii/c-platform-detect](https://github.com/rphii/c-platform-detect) | Platform detect header |
+| [dev-rphii/c-file](https://github.com/rphii/c-file) | C file library |
 | [dev-rphii/c-str](https://github.com/rphii/c-str) | C string library |
 | [dev-rphii/c-vec](https://github.com/rphii/c-vec) | Generic compile-time C vector |
 | [gui-apps/woomer](https://github.com/coffeeispower/woomer) | Zoomer application for Wayland inspired by tsoding's boomer |
