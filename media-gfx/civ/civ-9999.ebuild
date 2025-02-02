@@ -20,8 +20,8 @@ DEPEND="
 	virtual/opengl
 	media-libs/glfw
 	media-libs/freetype
-	dev-rphii/file
-	dev-rphii/str
+	dev-rphii/c-file
+	dev-rphii/c-str
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
