@@ -34,9 +34,9 @@ src_install() {
 	doins src/*.h
 
 	insinto /lib/rphii
-	doins build/32/str.so
+	doins build/32/libstr.so
 
 	insinto /lib64/rphii
-	doins build/64/str.so
+	doins build/64/libstr.so
 }
 
