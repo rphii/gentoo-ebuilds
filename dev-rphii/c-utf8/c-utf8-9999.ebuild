@@ -20,6 +20,10 @@ DEPEND="
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
+src_compile() {
+	./compile.sh
+}
+
 src_install() {
 	insinto /usr/include/rphii
 	doins src/*.h
