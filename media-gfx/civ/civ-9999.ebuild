@@ -23,6 +23,7 @@ DEPEND="
 	dev-rphii/c-file
 	dev-rphii/c-str
 	dev-rphii/c-lut
+	dev-rphii/c-utf8
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
