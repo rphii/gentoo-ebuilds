@@ -14,8 +14,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="
+	dev-util/pkgconf
 	dev-libs/cglm
-	dev-build/ninja
+	dev-build/make
 	sys-libs/glibc
 	virtual/opengl
 	media-libs/glfw
@@ -31,17 +32,7 @@ BDEPEND=""
 
 DESTDIR="/opt/${PN}"
 
-src_compile() {
-	eninja -C src
-}
-
 src_install() {
-	exeinto "${DESTDIR}"
-	doexe "src/${PN}.out"
-
-	insinto "${DESTDIR}"
-	doins -r src/shaders
-
-	dosym "/opt/${PN}/${PN}.out" "/bin/${PN}"
+	emake -C src DESTDIR="${D}" PREFIX="${EPREFIX}/usr" install
 }
 
