@@ -30,9 +30,19 @@ DEPEND="
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
-DESTDIR="/opt/${PN}"
+DESTDIR="opt/${PN}/"
+
+src_compile() {
+	emake -C src DESTDIR="${DESTDIR}" PREFIX="${EPREFIX}/"
+}
 
 src_install() {
-	emake -C src DESTDIR="${D}" PREFIX="${EPREFIX}/usr" install
+	exeinto "${DESTDIR}"
+	doexe "src/${PN}.out"
+
+	insinto "${DESTDIR}"
+	doins -r src/shaders
+
+	dosym "/opt/${PN}/${PN}.out" "/bin/${PN}"
 }
 
