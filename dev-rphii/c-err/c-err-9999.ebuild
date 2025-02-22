@@ -23,5 +23,8 @@ BDEPEND=""
 src_install() {
 	insinto /usr/include/rphii
 	doins src/err.h
+
+	insinto /usr/$(get_libdir)/pkgconfig
+	doins c-err.pc
 }
 

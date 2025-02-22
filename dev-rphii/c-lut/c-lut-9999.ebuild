@@ -22,5 +22,8 @@ BDEPEND=""
 src_install() {
 	insinto /usr/include/rphii
 	doins src/*.h
+
+	insinto /usr/$(get_libdir)/pkgconfig
+	doins c-lut.pc
 }
 

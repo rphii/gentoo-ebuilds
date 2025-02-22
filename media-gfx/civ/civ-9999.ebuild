@@ -7,7 +7,7 @@ URL="https://github.com/rphii/c-image-viewer.git"
 HOMEPAGE="${URL}"
 EGIT_REPO_URI="${URL}"
 
-inherit git-r3 ninja-utils
+inherit git-r3 meson
 
 LICENSE="MIT"
 SLOT="0"
@@ -30,19 +30,15 @@ DEPEND="
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
-DESTDIR="opt/${PN}/"
+src_configure() {
+	meson_src_configure
+}
 
 src_compile() {
-	emake -C src DESTDIR="${DESTDIR}" PREFIX="${EPREFIX}/"
+	meson_src_compile
 }
 
 src_install() {
-	exeinto "${DESTDIR}"
-	doexe "src/${PN}.out"
-
-	insinto "${DESTDIR}"
-	doins -r src/shaders
-
-	dosym "/opt/${PN}/${PN}.out" "/bin/${PN}"
+	meson_install
 }
 

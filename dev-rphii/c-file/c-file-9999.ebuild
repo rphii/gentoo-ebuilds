@@ -33,10 +33,13 @@ src_install() {
 	insinto /usr/include/rphii
 	doins src/*.h
 
-	insinto /lib/rphii
+	insinto /usr/lib/rphii
 	doins build/32/libfile.so
 
-	insinto /lib64/rphii
+	insinto /usr/lib64/rphii
 	doins build/64/libfile.so
+
+	insinto /usr/$(get_libdir)/pkgconfig
+	doins c-file.pc
 }
 
