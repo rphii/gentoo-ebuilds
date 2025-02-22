@@ -20,5 +20,8 @@ BDEPEND=""
 src_install() {
 	insinto /usr/include/rphii
 	doins src/colorprint.h
+
+	insinto /usr/$(get_libdir)/pkgconfig
+	doins c-colorprint.pc
 }
 

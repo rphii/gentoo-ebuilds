@@ -20,5 +20,8 @@ BDEPEND=""
 src_install() {
 	insinto /usr/include/rphii
 	doins src/platform_detect.h
+
+	insinto /usr/$(get_libdir)/pkgconfig
+	doins c-platform-detect.pc
 }
 

@@ -36,5 +36,8 @@ src_install() {
 
 	insinto /lib64/rphii
 	doins build/64/libutf8.so
+
+	insinto /usr/$(get_libdir)/pkgconfig
+	doins c-utf8.pc
 }
 

@@ -37,5 +37,8 @@ src_install() {
 
 	insinto /lib64/rphii
 	doins build/64/libstr.so
+
+	insinto /usr/$(get_libdir)/pkgconfig
+	doins c-str.pc
 }
 

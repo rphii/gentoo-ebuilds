@@ -22,5 +22,8 @@ BDEPEND=""
 src_install() {
 	insinto /usr/include/rphii
 	doins src/vec.h
+
+	insinto /usr/$(get_libdir)/pkgconfig
+	doins c-vec.pc
 }
 
