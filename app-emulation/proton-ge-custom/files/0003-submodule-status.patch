@@ -16,13 +16,13 @@ index 73ea347e..7a35fc12 100644
  $(OBJ)/.dxvk-post-build64:
  	mkdir -p "$(DST_DIR)"/lib64/wine/dxvk
 -	rm -f "$(DST_DIR)"/lib64/wine/dxvk/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && git submodule status -- dxvk ) > "$(DST_DIR)"/lib64/wine/dxvk/version; fi
-+	rm -f "$(DST_DIR)"/lib64/wine/dxvk/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo 9999 ) > "$(DST_DIR)"/lib64/wine/dxvk/version; fi
++	rm -f "$(DST_DIR)"/lib64/wine/dxvk/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo "${EBUILD_PROJECT_NAME}" ) > "$(DST_DIR)"/lib64/wine/dxvk/version; fi
  	touch $@
  
  $(OBJ)/.dxvk-post-build32:
  	mkdir -p "$(DST_DIR)"/lib/wine/dxvk
 -	rm -f "$(DST_DIR)"/lib/wine/dxvk/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && git submodule status -- dxvk ) > "$(DST_DIR)"/lib/wine/dxvk/version; fi
-+	rm -f "$(DST_DIR)"/lib/wine/dxvk/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo 9999 ) > "$(DST_DIR)"/lib/wine/dxvk/version; fi
++	rm -f "$(DST_DIR)"/lib/wine/dxvk/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo "${EBUILD_PROJECT_NAME}" ) > "$(DST_DIR)"/lib/wine/dxvk/version; fi
  	touch $@
  
  
@@ -31,13 +31,13 @@ index 73ea347e..7a35fc12 100644
  $(OBJ)/.dxvk-nvapi-post-build64:
  	mkdir -p "$(DST_DIR)"/lib64/wine/nvapi
 -	rm -f "$(DST_DIR)"/lib64/wine/nvapi/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && git submodule status -- dxvk-nvapi ) > "$(DST_DIR)"/lib64/wine/nvapi/version; fi
-+	rm -f "$(DST_DIR)"/lib64/wine/nvapi/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo 9999 ) > "$(DST_DIR)"/lib64/wine/nvapi/version; fi
++	rm -f "$(DST_DIR)"/lib64/wine/nvapi/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo "${EBUILD_PROJECT_NAME}" ) > "$(DST_DIR)"/lib64/wine/nvapi/version; fi
  	touch $@
  
  $(OBJ)/.dxvk-nvapi-post-build32:
  	mkdir -p "$(DST_DIR)"/lib/wine/nvapi
 -	rm -f "$(DST_DIR)"/lib/wine/nvapi/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && git submodule status -- dxvk-nvapi ) > "$(DST_DIR)"/lib/wine/nvapi/version; fi
-+	rm -f "$(DST_DIR)"/lib/wine/nvapi/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo 9999 ) > "$(DST_DIR)"/lib/wine/nvapi/version; fi
++	rm -f "$(DST_DIR)"/lib/wine/nvapi/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo "${EBUILD_PROJECT_NAME}" ) > "$(DST_DIR)"/lib/wine/nvapi/version; fi
  	touch $@
  
  
@@ -46,13 +46,13 @@ index 73ea347e..7a35fc12 100644
  $(OBJ)/.vkd3d-proton-post-build32:
  	mkdir -p "$(DST_DIR)"/lib/wine/vkd3d-proton
 -	rm -f "$(DST_DIR)"/lib/wine/vkd3d-proton/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && git submodule status -- vkd3d-proton ) > "$(DST_DIR)"/lib/wine/vkd3d-proton/version; fi
-+	rm -f "$(DST_DIR)"/lib/wine/vkd3d-proton/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo 9999 ) > "$(DST_DIR)"/lib/wine/vkd3d-proton/version; fi
++	rm -f "$(DST_DIR)"/lib/wine/vkd3d-proton/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo "${EBUILD_PROJECT_NAME}" ) > "$(DST_DIR)"/lib/wine/vkd3d-proton/version; fi
  	touch $@
  
  $(OBJ)/.vkd3d-proton-post-build64:
  	mkdir -p "$(DST_DIR)"/lib64/wine/vkd3d-proton
 -	rm -f "$(DST_DIR)"/lib64/wine/vkd3d-proton/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && git submodule status -- vkd3d-proton ) > "$(DST_DIR)"/lib64/wine/vkd3d-proton/version; fi
-+	rm -f "$(DST_DIR)"/lib64/wine/vkd3d-proton/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo 9999 ) > "$(DST_DIR)"/lib64/wine/vkd3d-proton/version; fi
++	rm -f "$(DST_DIR)"/lib64/wine/vkd3d-proton/version && if test -e $(SRCDIR)/.git; then ( cd $(SRCDIR) && echo "${EBUILD_PROJECT_NAME}" ) > "$(DST_DIR)"/lib64/wine/vkd3d-proton/version; fi
  	touch $@
  
  
