@@ -3,6 +3,7 @@
 
 |||
 |---|---|
+| [app-emulation/proton-ge-custom](https://github.com/GloriousEggroll/proton-ge-custom) | Compatibility tool for Steam Play based on Wine and additional components |
 | [app-misc/cft](https://github.com/rphii/c-file-tagger) | Simple CLI tool to store, systematically retrieve and manage tags of anything |
 | [app-misc/tgpt](https://github.com/aandrew-me/tgpt) | AI Chatbots in terminal without needing API keys |
 | [dev-lang/timers](https://github.com/rphii/TimersInterpreter) | Make use of time functions! Interpreter for the esoteric programming language |
