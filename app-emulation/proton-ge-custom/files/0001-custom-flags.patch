@@ -1,0 +1,252 @@
+From 547f73ba78e6d4783002f36cfaf405eac03084e9 Mon Sep 17 00:00:00 2001
+From: rphii
+Date: Fri, 7 Mar 2025 23:22:52 +0000
+Subject: [PATCH] custom flags patch
+
+---
+ Makefile.in                 | 47 ++++++++++++++++++++----
+ make/rules-makedep.mk       | 24 ++++++-------
+ make/rules-meson.mk         | 6 +++---
+ make/rules-meson-no-lto.mk  | 71 +++++++++++++++++++++++++++++++++++++
+ vrclient_x64/unix_private.h |  5 +++
+ wineopenxr/wineopenxr.spec  |  4 ---
+ 6 files changed, 132 insertions(+), 25 deletions(-)
+ create mode 100644 make/rules-meson-no-lto.mk
+
+diff --git a/Makefile.in b/Makefile.in
+index f6f57740..919cadc1 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -53,10 +53,44 @@ else
+     MESON_STRIP_ARG := --strip
+ endif
+ 
+-CROSSLDFLAGS   += -Wl,--file-alignment,4096
+-OPTIMIZE_FLAGS := -O2 -march=nocona -mtune=core-avx2 -mfpmath=sse
+-SANITY_FLAGS   := -fwrapv -fno-strict-aliasing
+-DEBUG_FLAGS    := -ggdb -ffunction-sections -fdata-sections -fno-omit-frame-pointer
++LTO_FLAGS      := #-ffat-lto-objects -flto=auto -flto-partition=balanced -flto-compression-level=0
++OPTIMIZE_C     := -DNDEBUG -march=native -O2 -pipe -fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta -fno-semantic-interposition
++
++#OPTIMIZE_C := -march=native -O3 -fipa-pta -pipe -fgraphite-identity -floop-nest-optimize -DNDEBUG -fno-semantic-interposition -fdevirtualize-at-ltrans \
++	      -fmerge-all-constants -fgcse-lm -fgcse-sm -fgcse-las -fgcse-after-reload -flive-range-shrinkage -fsched-pressure \
++	      -fsched-spec-load -fsched-spec-load-dangerous -fsched-stalled-insns=0 -fsched-stalled-insns-dep=0 -fsched2-use-superblocks -fsched-group-heuristic -fsched-critical-path-heuristic -fsched-spec-insn-heuristic -fsched-rank-heuristic -fsched-last-insn-heuristic -fsched-dep-count-heuristic -freschedule-modulo-scheduled-loops -fselective-scheduling -fselective-scheduling2 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops \
++	      -fno-semantic-interposition -fipa-pta -fisolate-erroneous-paths-attribute  \
++	      -fvpt -ftracer -fpeel-loops -funswitch-loops -fversion-loops-for-strides -fstdarg-opt -ffunction-sections -fdata-sections -ftoplevel-reorder \
++		  -ftree-loop-linear -floop-strip-mine -floop-block -fgraphite-identity -floop-nest-optimize -floop-parallelize-all -fno-var-tracking-assignments -ftree-loop-if-convert -ftree-loop-distribution -floop-interchange -ftree-loop-im -floop-unroll-and-jam -ftree-loop-ivcanon -fivopts \
++		  -ftree-vectorize -fvect-cost-model=dynamic -fsimd-cost-model=dynamic -fsplit-paths -fpredictive-commoning -fprefetch-loop-arrays -freorder-blocks -freorder-blocks-algorithm=stc \
++		  -fallow-store-data-races -fno-section-anchors -fweb -funroll-loops \
++		  \
++		  -fauto-inc-dec -fno-stack-protector \
++		  \
++	      -falign-functions  -falign-jumps -falign-labels  -falign-loops -fcaller-saves -fcode-hoisting -fcrossjumping -fcse-follow-jumps  -fcse-skip-blocks -fdelete-null-pointer-checks -fdevirtualize  -fdevirtualize-speculatively -fexpensive-optimizations -ffinite-loops -fgcse  -fgcse-lm -fhoist-adjacent-loads -finline-functions -finline-small-functions -findirect-inlining -fipa-bit-cp  -fipa-cp  -fipa-icf -fipa-ra \
++		  -fipa-sra  -fipa-vrp -fisolate-erroneous-paths-dereference -flra-remat -foptimize-sibling-calls -foptimize-strlen -fpartial-inlining -fpeephole2 -freorder-blocks-algorithm=stc -freorder-blocks-and-partition  -freorder-functions -frerun-cse-after-loop -fschedule-insns  -fschedule-insns2 \
++		  -fsched-interblock  -fsched-spec -fstore-merging -fstrict-aliasing -ftree-builtin-call-dce -ftree-loop-vectorize \
++		  -ftree-pre -ftree-slp-vectorize -ftree-switch-conversion \
++		  -ftree-tail-merge -ftree-vrp \
++		  \
++		  -frename-registers -fschedule-fusion -ftracer -fpeel-loops -fmove-loop-invariants \
++		  \
++		  \
++		  \
++		  -fomit-frame-pointer -freorder-blocks -fshrink-wrap -fshrink-wrap-separate -fsplit-wide-types -fssa-backprop -fssa-phiopt -ftree-bit-ccp -ftree-ccp -ftree-ch -ftree-coalesce-vars -ftree-copy-prop -ftree-dce -ftree-dominator-opts -ftree-dse -ftree-forwprop -ftree-fre -ftree-phiprop -ftree-pta -ftree-scev-cprop -ftree-sink -ftree-slsr -ftree-sra -ftree-ter -funit-at-a-time \
++		  -fbranch-count-reg -fcombine-stack-adjustments -fcompare-elim -fcprop-registers -fdce -fdefer-pop -fdse -fforward-propagate \
++		  -fipa-reference -fipa-reference-addressable -fmerge-constants \
++		  -fmove-loop-invariants \
++		  -fguess-branch-probability -fif-conversion -fif-conversion2 \
++		  -fipa-profile -fipa-pure-const \
++		  -finline-functions-called-once  \
++		  \
++
++
++CROSSLDFLAGS   += $(OPTIMIZE_C) -Wl,--file-alignment,4096
++OPTIMIZE_FLAGS := $(OPTIMIZE_C) -mfpmath=sse
++SANITY_FLAGS   := -fwrapv -fno-strict-aliasing ##-fno-strict-aliasing may interfere with LTO??
++DEBUG_FLAGS    :=
+ COMMON_FLAGS    = $(DEBUG_FLAGS) $(OPTIMIZE_FLAGS) $(SANITY_FLAGS) -ffile-prefix-map=$(CCACHE_BASEDIR)=.
+ COMMON_FLAGS32 := -mstackrealign
+ COMMON_FLAGS64 := -mcmodel=small
+@@ -92,6 +126,7 @@ include $(SRC)/make/rules-source.mk
+ include $(SRC)/make/rules-common.mk
+ include $(SRC)/make/rules-makedep.mk
+ include $(SRC)/make/rules-meson.mk
++include $(SRC)/make/rules-meson-no-lto.mk
+ include $(SRC)/make/rules-cmake.mk
+ include $(SRC)/make/rules-autoconf.mk
+ include $(SRC)/make/rules-configure.mk
+@@ -853,8 +888,8 @@ ifneq ($(UNSTRIPPED_BUILD),)
+ endif
+ 
+ $(eval $(call rules-source,vkd3d-proton,$(SRCDIR)/vkd3d-proton))
+-$(eval $(call rules-meson,vkd3d-proton,32,CROSS))
+-$(eval $(call rules-meson,vkd3d-proton,64,CROSS))
++$(eval $(call rules-meson-no-lto,vkd3d-proton,32,CROSS))
++$(eval $(call rules-meson-no-lto,vkd3d-proton,64,CROSS))
+ 
+ $(OBJ)/.vkd3d-proton-post-source:
+ 	sed -re 's#@VCS_TAG@#$(shell git -C $(SRCDIR)/vkd3d-proton describe --always --exclude=* --abbrev=15 --dirty=0)#' \
+diff --git a/make/rules-makedep.mk b/make/rules-makedep.mk
+index 140cb8ea..1841220e 100644
+--- a/make/rules-makedep.mk
++++ b/make/rules-makedep.mk
+@@ -17,22 +17,22 @@ $$(OBJ)/.$(1)-configure$(3):
+ 	    -e '/^libdir/c libdir = $$($(2)_LIBDIR$(3))' \
+ 	    -e '/^toolsdir/c toolsdir = $$(WINE_OBJ$(3))' \
+ 	    \
+-	    -e '/^CFLAGS/c CFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3))' \
+-	    -e '/^CPPFLAGS/c CPPFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3))' \
+-	    -e '/^CXXFLAGS/c CXXFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CXXFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) -std=c++17' \
+-	    -e '/^LDFLAGS/c LDFLAGS = $$($(2)_LIBFLAGS$(3)) $$($(2)_LDFLAGS$(3)) $$($(2)_LDFLAGS) $$($(4)LDFLAGS)' \
++	    -e '/^CFLAGS/c CFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS)' \
++	    -e '/^CPPFLAGS/c CPPFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS)' \
++	    -e '/^CXXFLAGS/c CXXFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CXXFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS) -std=c++17' \
++	    -e '/^LDFLAGS/c LDFLAGS = $$($(2)_LIBFLAGS$(3)) $$($(2)_LDFLAGS$(3)) $$($(2)_LDFLAGS) $$($(4)LDFLAGS) $$(LTO_FLAGS)' \
+ 	    \
+ 	    -e '/^x86_64_CC/a x86_64_CXX = $$(TARGET_CROSS64)-g++' \
+-	    -e '/^x86_64_CFLAGS/c x86_64_CFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3))' \
+-	    -e '/^x86_64_CPPFLAGS/c x86_64_CPPFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3))' \
+-	    -e '/^x86_64_CXXFLAGS/c x86_64_CXXFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CXXFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) -std=c++17' \
+-	    -e '/^x86_64_LDFLAGS/c x86_64_LDFLAGS = $$($(2)_LIBFLAGS$(3)) $$($(2)_LDFLAGS$(3)) $$($(2)_LDFLAGS) $$(CROSSLDFLAGS)' \
++	    -e '/^x86_64_CFLAGS/c x86_64_CFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS)' \
++	    -e '/^x86_64_CPPFLAGS/c x86_64_CPPFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS)' \
++	    -e '/^x86_64_CXXFLAGS/c x86_64_CXXFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CXXFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS) -std=c++17' \
++	    -e '/^x86_64_LDFLAGS/c x86_64_LDFLAGS = $$($(2)_LIBFLAGS$(3)) $$($(2)_LDFLAGS$(3)) $$($(2)_LDFLAGS) $$(CROSSLDFLAGS) $$(LTO_FLAGS)' \
+ 	    \
+ 	    -e '/^i386_CC/a i386_CXX = $$(TARGET_CROSS32)-g++' \
+-	    -e '/^i386_CFLAGS/c i386_CFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3))' \
+-	    -e '/^i386_CPPFLAGS/c i386_CPPFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3))' \
+-	    -e '/^i386_CXXFLAGS/c i386_CXXFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CXXFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) -std=c++17' \
+-	    -e '/^i386_LDFLAGS/c i386_LDFLAGS = $$($(2)_LIBFLAGS$(3)) $$($(2)_LDFLAGS$(3)) $$($(2)_LDFLAGS) $$(CROSSLDFLAGS)' \
++	    -e '/^i386_CFLAGS/c i386_CFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS)' \
++	    -e '/^i386_CPPFLAGS/c i386_CPPFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS)' \
++	    -e '/^i386_CXXFLAGS/c i386_CXXFLAGS = $$($(2)_INCFLAGS$(3)) $$($(2)_CXXFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS) -std=c++17' \
++	    -e '/^i386_LDFLAGS/c i386_LDFLAGS = $$($(2)_LIBFLAGS$(3)) $$($(2)_LDFLAGS$(3)) $$($(2)_LDFLAGS) $$(CROSSLDFLAGS) $$(LTO_FLAGS)' \
+ 	    \
+ 	    -e 's@UNIXLDFLAGS =@UNIXLDFLAGS = -L$$(WINE_LIBDIR$(3))/$$(LIBDIR_WINE_$(3)) -l:ntdll.so@' \
+ 	    $$(WINE_OBJ$(3))/Makefile > $$($(2)_OBJ$(3))/Makefile
+diff --git a/make/rules-meson.mk b/make/rules-meson.mk
+index fe71f6ab..ca86702a 100644
+--- a/make/rules-meson.mk
++++ b/make/rules-meson.mk
+@@ -23,9 +23,9 @@ pkgconfig = '$$$$PKG_CONFIG'
+ 
+ [properties]
+ needs_exe_wrapper = true
+-c_args = [$$(call list-quote,$$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)))]
+-cpp_args = [$$(call list-quote,$$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)))]
+-link_args = [$$(call list-quote,$$($(2)_LIBFLAGS$(3)) $$($(2)_LDFLAGS$(3)) $$($(2)_LDFLAGS) $$(CROSSLDFLAGS))]
++E_args = [$$(call list-quote,$$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS))]
++cpp_args = [$$(call list-quote,$$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) $$(LTO_FLAGS))]
++link_args = [$$(call list-quote,$$($(2)_LIBFLAGS$(3)) $$($(2)_LDFLAGS$(3)) $$($(2)_LDFLAGS) $$(CROSSLDFLAGS) $$(LTO_FLAGS))]
+ pkg_config_libdir = '$$$$CROSSPKG_CONFIG_LIBDIR'
+ 
+ [host_machine]
+diff --git a/make/rules-meson-no-lto.mk b/make/rules-meson-no-lto.mk
+new file mode 100644
+index 00000000..66bb122f
+--- /dev/null
++++ b/make/rules-meson-no-lto.mk
+@@ -0,0 +1,71 @@
++# parameters:
++#   $(1): lowercase package name
++#   $(2): uppercase package name
++#   $(3): 32/64, build type
++#   $(4): CROSS/<empty>, cross compile
++#
++define create-rules-meson-no-lto
++# Don't pass CROSS here, we need a native environment and we'll handle
++# cross compilation below with the CROSS-prefixed variables.
++$(call create-rules-common,$(1),$(2),$(3))
++
++define $(2)_MESON_CROSS$(3)
++cat <<EOF
++[binaries]
++ar = '$$$$CROSSAR'
++c = '$$$$CROSSCC'
++cpp = '$$$$CROSSCXX'
++ld = '$$$$CROSSLD'
++windres = '$$$$RC'
++strip = '$$$$STRIP'
++widl = '$$$$WIDL'
++pkgconfig = '$$$$PKG_CONFIG'
++
++[properties]
++needs_exe_wrapper = true
++c_args = [$$(call list-quote,$$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)))]
++cpp_args = [$$(call list-quote,$$($(2)_INCFLAGS$(3)) $$($(2)_CPPFLAGS) $$(COMMON_FLAGS) $$(COMMON_FLAGS$(3)) -std=c++17)]
++link_args = [$$(call list-quote,$$($(2)_LIBFLAGS$(3)) $$($(2)_LDFLAGS$(3)) $$($(2)_LDFLAGS) $$(CROSSLDFLAGS))]
++pkg_config_libdir = '$$$$CROSSPKG_CONFIG_LIBDIR'
++
++[host_machine]
++system = 'windows'
++cpu_family = '$$(MESON_CPU$(3))'
++cpu = '$$(MESON_CPU$(3))'
++endian = 'little'
++EOF
++endef
++
++export $(2)_MESON_CROSS$(3)
++
++$$($(2)_SRC)/meson.build: | $$(OBJ)/.$(1)-post-source
++
++$$(OBJ)/.$(1)-configure$(3): $$($(2)_SRC)/meson.build
++	@echo ":: configuring $(3)bit $(1)..." >&2
++	rm -rf "$$($(2)_OBJ$(3))/meson-private/coredata.dat"
++
++	echo "$$$$$(2)_MESON_CROSS$(3)" | env $$($(2)_ENV$(3)) sh >"$$($(2)_OBJ$(3))/cross-$(3).txt"
++
++	env $$($(2)_ENV$(3)) \
++	meson "$$($(2)_OBJ$(3))" "$$($(2)_SRC)" \
++	      --prefix="$$($(2)_DST$(3))" \
++	      --libdir="lib$(subst 32,,$(3))" \
++	      --buildtype=plain \
++	      $(if $(4),--cross-file="$$($(2)_OBJ$(3))/cross-$(3).txt",) \
++	      $$($(2)_MESON_ARGS) \
++	      $$($(2)_MESON_ARGS$(3)) \
++	      $$(MESON_STRIP_ARG)
++
++	touch $$@
++
++$$(OBJ)/.$(1)-build$(3):
++	@echo ":: building $(3)bit $(1)..." >&2
++	+env $$($(2)_ENV$(3)) \
++	ninja -C "$$($(2)_OBJ$(3))" install
++	touch $$@
++endef
++
++MESON_CPU32 = x86
++MESON_CPU64 = x86_64
++
++rules-meson-no-lto = $(call create-rules-meson-no-lto,$(1),$(call toupper,$(1)),$(2),$(3))
+diff --git a/vrclient_x64/unix_private.h b/vrclient_x64/unix_private.h
+index da4ebd7a..772c9f21 100644
+--- a/vrclient_x64/unix_private.h
++++ b/vrclient_x64/unix_private.h
+@@ -22,8 +22,13 @@ extern VkPhysicalDevice_T *(*p_get_native_VkPhysicalDevice)( VkPhysicalDevice_T
+ extern VkPhysicalDevice_T *(*p_get_wrapped_VkPhysicalDevice)( VkInstance_T *, VkPhysicalDevice_T * );
+ extern VkQueue_T *(*p_get_native_VkQueue)( VkQueue_T * );
+ 
++#if 0
+ extern char *json_convert_startup_info(const char *startup_info);
+ extern char *json_convert_paths(const char *input);
++#else
++char *json_convert_startup_info(const char *startup_info);
++char *json_convert_paths(const char *input);
++#endif
+ 
+ extern NTSTATUS vrclient_init( void *args );
+ extern NTSTATUS vrclient_unload( void *args );
+diff --git a/wineopenxr/wineopenxr.spec b/wineopenxr/wineopenxr.spec
+index 43c30f5e..e69de29b 100644
+--- a/wineopenxr/wineopenxr.spec
++++ b/wineopenxr/wineopenxr.spec
+@@ -1,4 +0,0 @@
+-@ stdcall xrNegotiateLoaderRuntimeInterface(ptr ptr) wine_xrNegotiateLoaderRuntimeInterface
+-@ stdcall __wineopenxr_GetVulkanInstanceExtensions(long ptr ptr)
+-@ stdcall __wineopenxr_GetVulkanDeviceExtensions(long ptr ptr)
+-@ stdcall __wineopenxr_get_extensions_internal(ptr ptr)
+-- 
+2.48.1
+
+
+
