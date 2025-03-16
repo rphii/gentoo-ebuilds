@@ -55,10 +55,9 @@ src_configure() {
 	cd build
 	# manually run
 	if [[ ! -e "Makefile" ]]; then
-		../configure.sh --build-name=\"${PROJECT_NAME}\" --container-engine=podman || die
-	else
 		ewarn "might have to manually run:"
 		ewarn "$ pushd $(pwd) && ../configure.sh --build-name=\"${PROJECT_NAME}\" --container-engine=podman ; popd"
+		../configure.sh --build-name=\"${PROJECT_NAME}\" --container-engine=podman || die
 	fi
 }
 
@@ -66,10 +65,9 @@ src_compile() {
 	cd build
 	# manually run
 	if [[ ! -e "${PROJECT_NAME}.tar.gz" ]]; then
-		make redist || die
-	else
 		ewarn "might have to manually run:"
 		ewarn "$ pushd $(pwd) && CCACHE_DIR=/var/cache/ccache make redist ; popd"
+		make redist || die
 	fi
 }
 
