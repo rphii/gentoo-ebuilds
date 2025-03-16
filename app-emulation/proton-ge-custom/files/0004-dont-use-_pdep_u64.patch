@@ -1,0 +1,25 @@
+From 37ac4f97cae85b56b935a870e6456b2d45dd908c Mon Sep 17 00:00:00 2001
+From: rphii
+Date: Sat, 15 Mar 2025 15:40:45 +0000
+Subject: [PATCH 1/1] dont-use-_pdep_u64
+
+---
+ src/include/fst/extensions/ngram/nthbit.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/include/fst/extensions/ngram/nthbit.h b/src/include/fst/extensions/ngram/nthbit.h
+index 4f47ee5..4d527b1 100644
+--- a/src/include/fst/extensions/ngram/nthbit.h
++++ b/src/include/fst/extensions/ngram/nthbit.h
+@@ -27,7 +27,7 @@
+ #include <fst/types.h>
+ #include <fst/log.h>
+ 
+-#if defined(__BMI2__)  // Intel Bit Manipulation Instruction Set 2
++#if defined(__BMI2__) && 0  // Intel Bit Manipulation Instruction Set 2
+ // PDEP requires BMI2; this is present starting with Haswell.
+ 
+ #include <immintrin.h>
+-- 
+2.48.1
+
