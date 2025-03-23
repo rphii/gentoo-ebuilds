@@ -30,7 +30,7 @@ PATCHES=(
 	)
 
 STEAM_COMPATDIR="${EPREFIX}/usr/share/steam/compatibilitytools.d/"
-MY_PROJECT_NAME="GE-Proton${PV}"
+EBUILD_PROJECT_NAME="GE-Proton${PV}"
 
 src_prepare() {
 	default
@@ -56,19 +56,19 @@ src_configure() {
 	# manually run
 	if [[ ! -e "Makefile" ]]; then
 		ewarn "might have to manually run:"
-		ewarn "$ sudo sh -c 'cd $(pwd) && ../configure.sh --build-name=\"${MY_PROJECT_NAME}\" --container-engine=podman'"
-		../configure.sh --build-name=\"${MY_PROJECT_NAME}\" --container-engine=podman || die
+		ewarn "$ sudo sh -c 'cd $(pwd) && ../configure.sh --build-name=\"${EBUILD_PROJECT_NAME}\" --container-engine=podman'"
+		../configure.sh --build-name=\"${EBUILD_PROJECT_NAME}\" --container-engine=podman || die
 	fi
 }
 
 src_compile() {
 	cd build
 	# manually run
-	if [[ ! -e "${MY_PROJECT_NAME}.tar.gz" ]]; then
+	if [[ ! -e "${EBUILD_PROJECT_NAME}.tar.gz" ]]; then
 		ewarn "might have to manually run: (using ccache)"
-		ewarn "$ sudo sh -c 'cd $(pwd) && CCACHE_DIR=/var/cache/ccache make redist'"
+		ewarn "$ sudo sh -c 'cd $(pwd) && EBUILD_PROJECT_NAME=${EBUILD_PROJECT_NAME} CCACHE_DIR=/var/cache/ccache make redist'"
 		ewarn "might have to manually run: (without ccache)"
-		ewarn "$ sudo sh -c 'cd $(pwd) && make redist'"
+		ewarn "$ sudo sh -c 'cd $(pwd) && EBUILD_PROJECT_NAME=${EBUILD_PROJECT_NAME} make redist'"
 		make redist || die
 	fi
 }
@@ -77,13 +77,13 @@ src_install() {
 	cd build
 
 	insinto "${STEAM_COMPATDIR}"
-	doins -r "${MY_PROJECT_NAME}"
+	doins -r "${EBUILD_PROJECT_NAME}"
 }
 
 pkg_postinst() {
 	einfo "changing permission of proton executables"
-	find  "${STEAM_COMPATDIR}/${MY_PROJECT_NAME}/proton" -exec chmod ugo+x "{}" \;
-	find  "${STEAM_COMPATDIR}/${MY_PROJECT_NAME}/files/bin" -type f -exec chmod ugo+x "{}" \;
-	find  "${STEAM_COMPATDIR}/${MY_PROJECT_NAME}/protonfixes/winetricks" -exec chmod ugo+x "{}" \;
+	find  "${STEAM_COMPATDIR}/${EBUILD_PROJECT_NAME}/proton" -exec chmod ugo+x "{}" \;
+	find  "${STEAM_COMPATDIR}/${EBUILD_PROJECT_NAME}/files/bin" -type f -exec chmod ugo+x "{}" \;
+	find  "${STEAM_COMPATDIR}/${EBUILD_PROJECT_NAME}/protonfixes/winetricks" -exec chmod ugo+x "{}" \;
 }
 
