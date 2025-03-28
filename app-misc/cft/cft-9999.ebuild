@@ -14,9 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="
-	dev-rphii/c-str
-	dev-rphii/c-file
-	dev-rphii/c-lut
+	dev-rphii/rphiic
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
