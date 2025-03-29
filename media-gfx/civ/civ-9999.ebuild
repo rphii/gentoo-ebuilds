@@ -22,7 +22,7 @@ DEPEND="
 	media-libs/glfw
 	media-libs/freetype
 	dev-libs/stb
-	dev-rphii/rphiic
+	dev-libs/rphiic
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
