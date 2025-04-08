@@ -56,7 +56,7 @@ src_configure() {
 	# manually run
 	if [[ ! -e "Makefile" ]]; then
 		ewarn "might have to manually run:"
-		ewarn "$ sudo sh -c 'cd $(pwd) && ../configure.sh --build-name=\"${EBUILD_PROJECT_NAME}\" --container-engine=podman'"
+		ewarn "$ sudo sh -c 'cd $(pwd) && EBUILD_PROJECT_NAME=${EBUILD_PROJECT_NAME} ../configure.sh --build-name=\"${EBUILD_PROJECT_NAME}\" --container-engine=podman'"
 		../configure.sh --build-name=\"${EBUILD_PROJECT_NAME}\" --container-engine=podman || die
 	fi
 }
