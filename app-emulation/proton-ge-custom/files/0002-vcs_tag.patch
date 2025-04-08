@@ -16,7 +16,7 @@ index f6f57740..73ea347e 100644
  
  $(OBJ)/.dxvk-post-source:
 -	sed -re 's#@VCS_TAG@#$(shell git -C $(SRCDIR)/dxvk describe --always --abbrev=15 --dirty=0)#' \
-+	sed -re 's#@VCS_TAG@#${EBUILD_PROJECT_NAME}#' \
++	sed -re 's#@VCS_TAG@#9999#' \
  	    $(SRCDIR)/dxvk/version.h.in > $(DXVK_SRC)/version.h.in
  	touch $@
  
@@ -25,10 +25,10 @@ index f6f57740..73ea347e 100644
  
  $(OBJ)/.vkd3d-proton-post-source:
 -	sed -re 's#@VCS_TAG@#$(shell git -C $(SRCDIR)/vkd3d-proton describe --always --exclude=* --abbrev=15 --dirty=0)#' \
-+	sed -re 's#@VCS_TAG@#${EBUILD_PROJECT_NAME}#' \
++	sed -re 's#@VCS_TAG@#9999#' \
  	    $(SRCDIR)/vkd3d-proton/vkd3d_build.h.in > $(VKD3D_PROTON_SRC)/vkd3d_build.h.in
 -	sed -re 's#@VCS_TAG@#$(shell git -C $(SRCDIR)/vkd3d-proton describe --always --tags --dirty=+)#' \
-+	sed -re 's#@VCS_TAG@#${EBUILD_PROJECT_NAME}#' \
++	sed -re 's#@VCS_TAG@#9999#' \
  	    $(SRCDIR)/vkd3d-proton/vkd3d_version.h.in > $(VKD3D_PROTON_SRC)/vkd3d_version.h.in
  	touch $@
  
