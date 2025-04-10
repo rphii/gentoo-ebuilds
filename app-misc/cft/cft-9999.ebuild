@@ -19,6 +19,10 @@ DEPEND="
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
+src_compile() {
+	emake -C src
+}
+
 src_install() {
 	emake -C src DESTDIR="${D}" PREFIX="${EPREFIX}/usr" install
 }
