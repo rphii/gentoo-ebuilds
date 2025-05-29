@@ -7,23 +7,28 @@ URL="https://github.com/rphii/c-file-tagger"
 HOMEPAGE="${URL}"
 EGIT_REPO_URI="${URL}"
 
-inherit git-r3 ninja-utils
+inherit git-r3 meson
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="
-	dev-libs/rphiic
+	dev-libs/rphiic:=
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
+src_configure() {
+	meson_src_configure
+}
+
 src_compile() {
-	emake -C src
+	meson_src_compile
 }
 
 src_install() {
-	emake -C src DESTDIR="${D}" PREFIX="${EPREFIX}/usr" install
+	meson_install
 }
+
 
