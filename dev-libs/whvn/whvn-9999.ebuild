@@ -3,35 +3,28 @@
 
 EAPI=8
 
-DESCRIPTION="Small String Optimized and Dynamically Allocatable String"
-URL="https://github.com/rphii/rlso"
+DESCRIPTION="wallhaven API library and cli "
+URL="https://github.com/rphii/c-whvn"
 HOMEPAGE="${URL}"
 EGIT_REPO_URI="${URL}"
 
 inherit git-r3 meson
 
-LICENSE=""
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="test"
-RESTRICT="!test? ( test )"
 
 DEPEND="
-	dev-build/meson
 	dev-libs/rlc
-	test? (
-		dev-util/lcov
-		dev-util/gcovr
-		)
-	"
+	dev-libs/rlso
+	dev-libs/rlarg
+	dev-libs/rljson
+	net-misc/curl
+"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
 src_configure() {
-	local emesonargs=(
-		$(meson_feature test tests)
-	)
-
 	meson_src_configure
 }
 
@@ -43,6 +36,3 @@ src_install() {
 	meson_install
 }
 
-src_test() {
-	meson_src_test --no-suite syntax-check
-}
