@@ -24,6 +24,7 @@ DEPEND="
 	dev-libs/stb
 	dev-libs/rlc
 	dev-libs/rlso
+	dev-libs/rlpw
 	dev-libs/rlarg
 "
 RDEPEND="${DEPEND}"
