@@ -14,7 +14,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="
-	dev-libs/rlc:=
+	dev-libs/rlc
+	dev-libs/rlso
+	dev-libs/rlarg
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
