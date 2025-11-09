@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="
-	dev-libs/rphiic:=
+	dev-libs/rlc:=
 "
 RDEPEND="${DEPEND}"
 BDEPEND=""
