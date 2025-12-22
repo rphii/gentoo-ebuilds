@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="simple directory explorer"
 URL="https://github.com/rphii/gaki"
-SRC_URI="${URL}/archive/refs/tags/v${PV}.tar.gz"
+SRC_URI="${URL}/archive/refs/tags/v${PV}.tar.gz -> ${PF}.tar.gz"
 HOMEPAGE="${URL}"
 
 inherit meson
@@ -16,7 +16,7 @@ KEYWORDS="~amd64"
 
 DEPEND="
 	dev-build/meson
-	=dev-libs/rltui-0.0.5
+	~dev-libs/rltui-0.0.5
 	dev-libs/rlpw
 	dev-libs/rlso
 	dev-libs/rlc

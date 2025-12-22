@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="TUI helpers for rl*"
 URL="https://github.com/rphii/rltui"
-SRC_URI="${URL}/archive/refs/tags/v${PV}.tar.gz"
+SRC_URI="${URL}/archive/refs/tags/v${PV}.tar.gz -> ${PF}.tar.gz"
 HOMEPAGE="${URL}"
 
 inherit meson
