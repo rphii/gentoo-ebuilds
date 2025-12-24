@@ -21,3 +21,9 @@
 eselect repository add rphii git https://github.com/rphii/gentoo-ebuilds.git
 ```
 
+# Synchronize
+```
+emaint sync -r rphii
+```
+
+
