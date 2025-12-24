@@ -16,6 +16,7 @@ KEYWORDS="~amd64"
 
 DEPEND="
 	dev-build/meson
+	dev-libs/stb
 	dev-libs/rltui
 	dev-libs/rlpw
 	dev-libs/rlso
