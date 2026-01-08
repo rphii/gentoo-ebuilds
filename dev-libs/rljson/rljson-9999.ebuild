@@ -13,16 +13,26 @@ inherit git-r3 meson
 LICENSE=""
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 DEPEND="
 	dev-build/meson
 	dev-libs/rlc
 	dev-libs/rlso
+	test? (
+		dev-util/lcov
+		dev-util/gcovr
+		)
 	"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
 src_configure() {
+	local emesonargs=(
+		$(meson_feature test tests)
+	)
+
 	meson_src_configure
 }
 
