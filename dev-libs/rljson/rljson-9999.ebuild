@@ -33,7 +33,11 @@ src_configure() {
 		$(meson_feature test tests)
 	)
 
-	meson_src_configure
+	meson_src_configure "${emesonargs[@]}"
+}
+
+src_test() {
+    meson_src_test
 }
 
 src_compile() {
